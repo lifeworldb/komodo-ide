@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <style type="text/css">
+      * {
+        box-sizing: border-box;
+      }
+      html, body{
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container" style="width: 100%; height: calc(100% - 30px); border:1px solid #ccc"></div>
+    
+    <button id="btnShowText">Show Text</button>
+
+    <script>
+      // loader.jsを読み込むと、require関数がloader.js内のAMD方式のもので上書きされてしまう。
+      // 通常のCommonJSスタイルのrequireが使えるように、別変数に退避しておく
+      var nodeRequire = global.require;
+    </script>
+    <script src="node_modules/monaco-editor/min/vs/loader.js"></script>
+    <script>
+      // loader.jsのrequire関数はamdRequireという名前にしておき、
+      // 退避しておいた、CommonJSスタイルのrequire関数を元に戻す
+      var amdRequire = global.require;
+      global.require = nodeRequire;
+
+      var path = require('path');
+      function uriFromPath(_path) {
+        var pathName = path.resolve(_path).replace(/\\/g, '/');
+        if (pathName.length > 0 && pathName.charAt(0) !== '/') {
+          pathName = '/' + pathName;
+        }
+        return encodeURI('file://' + pathName);
+      }
+      amdRequire.config({
+        baseUrl: uriFromPath(path.join(__dirname, 'node_modules/monaco-editor/min'))
+      });
+      // workaround monaco-css not understanding the environment
+      self.module = undefined;
+      // workaround monaco-typescript not understanding the environment
+      self.process.browser = true;
+    </script>
+
+    <script>
+      // You can also require other files to run in this process
+      require('./index.js')
+    </script>
+  </body>
+</html>

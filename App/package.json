@@ -1,0 +1,69 @@
+{
+  "name": "komodo-ide",
+  "version": "1.0.0",
+  "productName": "Komodo IDE",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "npm run build && electron main.js",
+    "pack": "build --dir",
+    "dist": "build",
+    "pack-l": "build --dir --linux",
+    "dist-l": "build --linux",
+    "pack-w": "build --dir --windows",
+    "dist-w": "build --windows",
+    "packs": "electron-packager . sample --out=dist --arch=x64 --platform=win32 --version=1.7.5 --overwrite --prune --ignore=dist"
+  },
+  "build": {
+    "appId": "com.komodo.komodo-ide",
+    "asar": true,
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "maintainer": "${author.name}",
+      "vendor": "${author.name}",
+      "icon": "build/icon.ico",
+      "category": "Utility"
+    },
+    "win": {
+      "target": [
+        "portable",
+        "NSIS"
+      ],
+      "icon": "build/icon.ico"
+    }
+  },
+  "author": {
+    "name": "lifeworldb",
+    "email": "sebastian@lionworkstudios.com"
+  },
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "electron": "^1.7.5",
+    "electron-packager": "^9.0.1",
+    "electron-builder": "^20.25.0",
+    "typescript": "^2.5.2"
+  },
+  "dependencies": {
+    "monaco-editor": "^0.10.0",
+    "socket.io-client": "^2.1.1"
+  }
+}

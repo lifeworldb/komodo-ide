@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./node_modules/socket.io-client/dist/socket.io.js"></script>
+    <title>Document</title>
+
+    <style>
+        body {
+            background: black;
+            color: #dadada;
+            font-size: 13px;
+        }
+
+        .line {
+            display: block;
+            line-height: 1.25em;
+        }
+
+        .user {
+            color: white;
+        }
+
+        .user::before {
+            content: '[';
+            display: inline;
+        }
+
+        .user::after {
+            content: ']';
+            display: inline;
+        }
+
+        .cyantist {
+            color: cyan;
+        }
+
+        .server {
+            color: lime;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .guest {
+            color: gold;
+        }
+
+        .entry::before {
+            content: '\\\\\\\\\\ ';
+            display: inline;
+            color: lime;
+        }
+
+        .entry::after {
+            content: ' /////';
+            display: inline;
+            color: lime;
+        }
+
+        .part::before {
+            content: '///// ';
+            display: inline;
+            color: lime;
+        }
+
+        .part::after {
+            content: ' \\\\\\\\\\';
+            display: inline;
+            color: lime;
+        }
+    </style>
+</head>
+
+<body>
+    <span class="line part">
+        <span class="user">Paradox</span> &lt;mistakenly used an unsafe linking book without a maintainer's suit *ZZZZZWHAP*&gt;</span>
+
+    <span class="line">
+        <span class="user">Tweek</span> ok no more guesting people other mark is gonna kill me &gt;.&gt;</span>
+
+    <span class="line">
+        <span class="user">IRC</span> &lt;chucker&gt; I AM THE LORD OF HE||FIRE</span>
+
+    <span class="line entry">
+        <span class="user">Tweek</span> &lt;links in from somewhere on the internet Age&gt;</span>
+
+    <span class="line">
+        <span class="user guest">Yali</span> ha i'm a guest now</span>
+
+    <span class="line part">
+        <span class="user cyantist">Tweek</span> &lt;links safely back to their home Age&gt;</span>
+
+    <span class="line">
+        <span class="user cyantist">Tweek</span> see now you are a guest too Yali :D</span>
+
+    <span class="line">
+        <span class="user cyantist">Tweek</span> ah there we go</span>
+
+    <span class="line">
+        <span class="user">Yali</span> he did some amazing work</span>
+
+    <span class="line entry">
+        <span class="user cyantist">Tweek</span> &lt;links in from Cyan Worlds Age&gt;</span>
+
+    <span class="line entry">
+        <span class="user">Paradox</span> &lt;links in from somewhere on the internet Age&gt;</span>
+
+    <span class="line">
+        <span class="user server">ChatServer</span> Welcome to the Cyan Chat room.</span>
+
+    <span class="line">
+        <span class="user server">ChatServer</span> There are only a few rules:</span>
+
+    <span class="line">
+        <span class="user server">ChatServer</span> &nbsp;&nbsp;&nbsp;&nbsp;Be respectful and sensitive to others (please, no platform wars).</span>
+
+    <span class="line">
+        <span class="user server">ChatServer</span> &nbsp;&nbsp;&nbsp;&nbsp;Keep it "G" rated (family viewing), both in language and content.</span>
+
+    <span class="line">
+        <span class="user server">ChatServer</span> &nbsp;&nbsp;&nbsp;&nbsp;And HAVE FUN!</span>
+
+    <span class="line">
+        <span class="user server">ChatServer</span>
+    </span>
+
+    <span class="line">
+        <span class="user server">ChatServer</span> Termination of use can happen without warning!</span>
+
+    <span class="line">
+        <span class="user server">ChatServer</span>
+    </span>
+
+    <span class="line">
+        <span class="user server">ChatServer</span> During special events, send your questions to the host</span>
+
+    <span class="line">
+        <span class="user server">ChatServer</span> by private message, then they will in turn ask the special</span>
+
+    <span class="line">
+        <span class="user server">ChatServer</span> guests your question.</span>
+
+    <span class="line">
+        <span class="user server">ChatServer</span>
+    </span>
+
+    <span class="line">
+        <span class="user server">ChatServer</span> Server commands now available, type !\? at the beginning of a line.</span>
+
+    <span class="line">
+        <span class="user server">ChatServer</span> Please send all comments and bugs about CyanChat to markd@cyan.com</span>
+
+    <span class="line">
+        <span class="user server">ChatServer</span> CyanChat Server version 2.12d</span>
+
+    <span class="line">
+        <span class="user error">ChatClient</span> connecting to: cho.cyan.com:1812</span>
+</body>
+
+</html>
