@@ -44,15 +44,18 @@ join.use((socket, next) => {
 })
 
 join.on('connection', (socket) => {
+    let lastData
     console.log('Conection join')
 
     socket.on('disconnect', () => {
         console.log('user disconnected')
     })
 
-    socket.on('room'+room, (data) => {
-        join.emit('room'+room, data)
-        console.log('Data entry: '+data)
+    socket.on('room' + room, (data) => {
+        lastData = data
+        //join.emit('room'+room, data)
+        socket.broadcast.emit('room'+room, data)
+        console.log('Data entry: '+JSON.stringify(data))
     })
 })
 

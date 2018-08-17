@@ -1,26 +1,63 @@
-import * as electron from 'electron';
-import {app, BrowserWindow} from 'electron';
+import { app, BrowserWindow } from 'electron'
+import * as path from 'path'
+import * as url from 'url'
 
-// メインウィンドウの参照をグローバルに持っておく。
-var mainWindow: Electron.BrowserWindow = null;
+let mainWindow: Electron.BrowserWindow
 
-// すべてのウィンドウが閉じられた際の動作
-app.on('window-all-closed', function() {
-  // OS X では、ウィンドウを閉じても一般的にアプリ終了はしないので除外。
-  if (process.platform != 'darwin') {
-    app.quit();
+function createWindow() {
+
+  mainWindow = new BrowserWindow({
+    height: 600,
+    width: 800,
+    center: true,
+    fullscreenable: true,
+    fullscreen: false,
+    resizable: true,
+    title: 'Komodo',
+    autoHideMenuBar: true,
+    titleBarStyle: 'hiddenInset',
+    /*webPreferences: {
+      devTools: true,
+      sandbox: false,
+      nodeIntegration: true,
+      nodeIntegrationInWorker: true
+    },*/
+    frame: true
+  })
+
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, './index.html'),
+    protocol: 'file',
+    slashes: true
+  }))
+
+  // Open the DevTools
+  // mainWindow.webContents.openDevTools()
+
+  mainWindow.on('closed', () => {
+    mainWindow = null
+  })
+}
+
+/*const isSecondInstance = app.makeSingleInstance((commandLine, workingDirectory) => {
+  if (mainWindow) {
+    if (mainWindow.isMinimized())
+      mainWindow.restore()
+    mainWindow.focus()
   }
-});
+})*/
 
-app.on('ready', function() {
-  // 新規ウィンドウ作成
-  mainWindow = new BrowserWindow({ width: 800, height: 600 });
+// Close instance window if isSecondInstance is true
+// if (isSecondInstance) app.quit()
 
-  // index.htmlを開く
-  mainWindow.loadURL('file://' + __dirname + '/index.html');
+app.on('ready', createWindow)
 
-  // ウィンドウが閉じられたら、ウィンドウへの参照を破棄する。
-  mainWindow.on('closed', function() {
-    mainWindow = null;
-  });
-});
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin')
+    app.quit()
+})
+
+app.on('activate', () => {
+  if (mainWindow === null)
+    createWindow()
+})

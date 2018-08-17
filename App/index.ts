@@ -37,7 +37,7 @@ function onModuleLoaded() {
         label: 'Create My Room',
 
         keybindings: [
-            monaco.KeyMod.CtrlCmd | monaco.KeyCode.F10,
+            monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.F10,
             // chord
             monaco.KeyMod.chord(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_K, monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_R)
         ],
@@ -56,18 +56,43 @@ function onModuleLoaded() {
         }
     })
 
+    editor.addAction({
+        id: 'join-room',
+        label: 'Join Room',
+
+        keybindings: [
+            monaco.KeyMod.CtrlCmd | monaco.KeyMod.Shift | monaco.KeyCode.F11,
+            // chord
+            monaco.KeyMod.chord(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_K, monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_J)
+        ],
+
+        precondition: null,
+
+        keybindingContext: null,
+
+        contextMenuGroupId: 'navigation',
+        contextMenuOrder: 1.4,
+
+        run: (ed) => {
+            alert(`Joined at room #${roomId}`);
+            joinRoom()
+            return null
+        }
+    })
+
 }
 
 function creteRoom() {
-    let room = require('socket.io-client')('http://localhost:3080/join?room='+roomId);
+    let room = require('socket.io-client')('http://localhost:3080/join');
     room.emit('room' + roomId, editor.getValue())
-    room.on('room' + roomId, (data) => {
+    /*room.on('room' + roomId, (data) => {
         if (data.owner != myID) {
             editor.setValue(data.code)
             console.log('Owner: ' + data.owner)
             console.log('Data: '+data.code)
         }
-    })
+    })*/
+
     editor.onDidChangeModelContent(() => {
         console.log('cambio texto: ')
         let data = {
@@ -77,6 +102,19 @@ function creteRoom() {
 
         room.emit('room' + roomId, data)
     })
+    document.title = `Komodo Room #${roomId}`
+}
+
+function joinRoom() {
+    let room = require('socket.io-client')('http://localhost:3080/join?room='+roomId)
+    room.on('room' + roomId, (data) => {
+        if (data.owner != myID) {
+            editor.setValue(data.code)
+            console.log('Owner: ' + data.owner)
+            console.log('Data: '+data.code)
+        }
+    })
+    document.title = `Komodo Joined at Room #${roomId}`;
 }
 
 function showEditorText() {
@@ -89,4 +127,4 @@ function showEditorText() {
 }
 
 
-document.getElementById('btnShowText').onclick = showEditorText;
+//document.getElementById('btnShowText').onclick = showEditorText;
